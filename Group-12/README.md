@@ -1,1 +1,0 @@
-       **Ried's List**
