@@ -1,16 +1,23 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 # -*- coding: utf-8 -*-
 # Create your models here.
 # Models are the way we interact with the database
+
+User = get_user_model()
+
+
 class Listing(models.Model):
-    title = models.CharField(max_length=200, null=True)
-    price = models.PositiveIntegerField(0)
-    zipCode = models.PositiveIntegerField(0)
+    productName = models.CharField(max_length=200, null=True)
+    productID = models.PositiveIntegerField(0)
+    sellerID = models.PositiveIntegerField(0, null=True)
+    listingID = models.PositiveIntegerField(0)
     dateAdded = models.DateTimeField(auto_now=False, auto_now_add = True)
-    location = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title
+    
+    
 
 
 class Messages(models.Model):
@@ -22,3 +29,6 @@ class Messages(models.Model):
     def __str__(self):
         return self.body
 
+class Watchlist(models.Model):
+    #Owner = models.ManyToManyField() #This needs to reference a User model, I'm not sure how to do that yet
+    item = models.ManyToManyField(Listing)
