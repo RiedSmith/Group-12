@@ -30,5 +30,5 @@ class Messages(models.Model):
         return self.body
 
 class Watchlist(models.Model):
-    #Owner = models.ManyToManyField() #This needs to reference a User model, I'm not sure how to do that yet
+    Owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     item = models.ManyToManyField(Listing)
