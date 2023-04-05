@@ -1,7 +1,186 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Login</title>
-  </head>
-    <h1>Epic style</h1>
+<html lang="en">
+<head>
+  <style>
+    /* Reset styles for improved cross-browser compatibility */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+header form {
+  display: flex;
+}
+
+header input[type="text"] {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+header button[type="submit"] {
+  background-color: #fff;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+main {
+  padding: 2rem;
+}
+
+main h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+main ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+main li {
+  flex-basis: 30%;
+  margin-bottom: 2rem;
+}
+
+main a {
+  display: block;
+  text-align: center;
+}
+
+main img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+main h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+main p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+footer {
+  background-color: #f2f2f2;
+  padding: 1rem;
+  text-align: center;
+}
+
+footer ul {
+  list-style: none;
+  margin-bottom: 0.5rem;
+}
+
+footer li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+footer li:last-child {
+  margin-right: 0;
+}
+
+footer a {
+  color: #333;
+  text-decoration: none;
+}
+
+footer p {
+  font-size: 0.8rem;
+}
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RiedsList</title>
+  <!-- Include CSS and JavaScript files -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Include header section -->
+  <header>
+    <h1>ReidsList</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Register</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Include main section for product listings -->
+  <main>
+    <section>
+      <h2>Featured Products</h2>
+      <ul>
+        <li>
+          <a href="#">
+            <img src="product1.jpg" alt="Product 1">
+            <h3>Product 1</h3>
+            <p>$10.00</p>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="product2.jpg" alt="Product 2">
+            <h3>Product 2</h3>
+            <p>$20.00</p>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="product3.jpg" alt="Product 3">
+            <h3>Product 3</h3>
+            <p>$30.00</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Include footer section -->
+  <footer>
+    <ul>
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+    </ul>
+    <p>&copy; 2023 My eCommerce Website. All rights reserved.</p>
+  </footer>
+</body>
 </html>
