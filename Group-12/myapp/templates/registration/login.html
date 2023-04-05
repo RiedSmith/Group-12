@@ -12,14 +12,14 @@
             border-radius: 5px;
         }
         .login-form input {
-            width: 100%;
+            width: 90%;
             margin-bottom: 10px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 3px;
         }
         .login-form button {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             background-color: #007bff;
             color: #fff;
@@ -32,9 +32,9 @@
 <body>
     <div class="login-form">
         <h1>Login</h1>
-        <form>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
             <button type="submit">Login</button>
         </form>
         <button onclick="signup()">Sign up</button>
