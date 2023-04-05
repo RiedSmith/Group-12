@@ -8,8 +8,11 @@ jobs:
   testJob:
     #runs test on code I guess
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/python:3.10
         #need to check what python version we are using
+      - image: cimg/posgres:14.1
+        environment:
+          POSTGRES_USER: example
     steps:
       - checkout
       #- run:
