@@ -15,9 +15,11 @@ jobs:
           POSTGRES_USER: example
     steps:
       - checkout
-      #- run:
-      #    name: "Say hello"
-      #    command: "echo Hello, World!"
+      - run:
+          name: run tests
+          command: python manage.py test
+      - store_test_results:
+          path: test_results
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
