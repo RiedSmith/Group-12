@@ -9,4 +9,5 @@ jobs:
       - image: circleci/python:3.10
     steps:
       - checkout
+      
       - run: python manage.py test
