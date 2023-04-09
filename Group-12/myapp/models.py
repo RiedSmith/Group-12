@@ -17,13 +17,13 @@ class Listing(models.Model):
         return self.title
     
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     email = models.CharField(max_length=35, blank=True)
     account_type_choices = [
         ('B', 'Buyer'),
         ('S', 'Seller'),
     ]
-    account_type = models.CharField(max_length=1, choices=account_type_choices, blank=True)
+    account_type = models.CharField(max_length=10, choices=account_type_choices, blank=True)
     location = models.CharField(max_length=30, blank=True)
     
     def __str__(self):
@@ -37,6 +37,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
 
 class Messages(models.Model):
     body = models.CharField(max_length=1000, null=True)
