@@ -10,14 +10,14 @@ account_type_choices = [
 ]
 
 class ProfileForm(UserCreationForm):
-    account_type = forms.MultipleChoiceField(
+    account_type = forms.ChoiceField(
         label="Choose Account Type:",
-        required=True,
         widget=forms.Select,
         choices=account_type_choices
     )
     email = forms.CharField(label="Email", max_length=30)
+    location = forms.CharField(label="City", max_length=30)
     class Meta:
         model = User
-        fields = ('username', 'account_type', 'password1', 'password2',)
+        fields = ('username','password1', 'password2',)
         labels = {'account_type' : 'Account Type'}
