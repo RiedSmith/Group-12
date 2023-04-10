@@ -14,8 +14,8 @@ jobs:
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: 3306
 
-    working_directory: /home/circleci/project
-    
+    working_directory:  GitHub\Group-12\GROUP-12
+
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install -y mysql-client
