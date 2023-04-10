@@ -3,22 +3,23 @@
 version: 2.1
 
 # See: https://circleci.com/docs/configuration-reference/#jobs
-orbs:
-  python: circleci/python@0.2.1
-
-jobs
-  build-and-test:
-    executor: python/default
+jobs:
+  test-and-lint:
+    docker:
+      - image: cimg/python:3.10.1
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
       - run:
-          command: ./manage.py test
-          name: Test
-          
+          name: install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: lint
+          command: pylint my_media/ media_organizer/
+      - run:
+          name: run tests
+          command: python manage.py test
+
 workflows:
-  main:
+  build-and-test-workflow:
     jobs:
-      - build-and-test
+      - test-and-lint
