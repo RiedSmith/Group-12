@@ -18,13 +18,13 @@ class Listing(models.Model):
     
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    email = models.CharField(max_length=35, blank=True)
+    email = models.EmailField()
     account_type_choices = [
         ('B', 'Buyer'),
         ('S', 'Seller'),
     ]
-    account_type = models.CharField(max_length=10, choices=account_type_choices, blank=True)
-    location = models.CharField(max_length=30, blank=True)
+    account_type = models.CharField(max_length=10, choices=account_type_choices, null=True)
+    location = models.CharField(max_length=30, null=True)
     
     def __str__(self):
         return self.user.username
