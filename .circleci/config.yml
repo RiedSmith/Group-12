@@ -4,22 +4,17 @@ version: 2.1
 
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  test-and-lint:
+  build:
     docker:
-      - image: cimg/python:3.10.1
+      - image: circleci/python:3.10.1
+        environment:
+          MYSQL_DATABASE: django_riedslist
+          MYSQL_USER: root
+          MYSQL_PASSWORD: Mosquito_Gamer_7411
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: 3306
     steps:
       - checkout
-      - run:
-          name: install dependencies
-          command: pip install -r requirements.txt
-      - run:
-          name: lint
-          command: pylint my_media/ media_organizer/
-      - run:
-          name: run tests
-          command: python manage.py test
-
-workflows:
-  build-and-test-workflow:
-    jobs:
-      - test-and-lint
+      - run: sudo apt-get update && sudo apt-get install -y mysql-client
+      - run: pip install -r requirements.txt
+      - run: python manage.py test
