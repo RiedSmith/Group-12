@@ -15,4 +15,3 @@ jobs:
       - run:
           name: run tests
           command: python manage.py test
-          working_directory: GitHub\Group-12\GROUP-12
