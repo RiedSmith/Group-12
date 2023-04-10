@@ -13,7 +13,7 @@ class ProfileForm(UserCreationForm):
     account_type = forms.MultipleChoiceField(
         label="Choose Account Type:",
         required=True,
-        widget=forms.SelectMultiple,
+        widget=forms.Select,
         choices=account_type_choices
     )
     email = forms.CharField(label="Email", max_length=30)
