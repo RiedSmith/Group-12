@@ -54,7 +54,7 @@ def logout_view(request):
     
     # remove the reference to the user object
     request.user = None
-    return redirect(reverse('home'))
+    return redirect(reverse('main_get_all_product_names'))
 
 def signup(request):
     form = ProfileForm()
@@ -84,8 +84,13 @@ def display_user_listings(request):
 
 def get_all_product_names(request):
     all_products = Listing.objects.all()
-    #.values_list('productName', flat=True)
+    
     return render(request, 'main_pages/buymainpage.html', {'products': all_products})
+
+def main_get_all_product_names(request):
+    all_products = Listing.objects.all()
+    
+    return render(request, 'main_pages/mainpage.html', {'products': all_products})
 
 @login_required
 def add_listing(request):
