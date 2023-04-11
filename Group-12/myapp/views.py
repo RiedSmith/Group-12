@@ -12,14 +12,38 @@ from .models import Profile, User
 def home(request):
     return render(request, "main_pages/mainpage.html")
 
-def login_view(request):
-    if request.method == 'POST':
-        if Profile.account_type == 'B':
-            return render(request, 'main_pages/mainpage.html')
-        else:
-            return render(request, 'main_pages/seller_portal.html')
-    return render(request, 'main_pages/mainpage.html')
+def buyer(request):
+    return render(request, "main_pages/buymainpage.html")
 
+def seller_portal(request):
+    return render(request, "main_pages/buymainpage.html")
+
+def get_account_type(user):
+    try:
+        profile = Profile.objects.get(user=user)
+        return profile.account_type
+    except Profile.DoesNotExist:
+        return None
+    
+def login_view(request):
+    print("In login view")
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        account_type = get_account_type(user)
+        print("User is authenticated")
+        if user is not None:
+            login(request, user)
+            print("User is logged in")
+            if account_type == 'B':
+                print("User is a buyer")
+                return redirect(reverse('buyer'))
+            print("User is a seller")
+            return redirect(reverse('seller'))
+        else:
+            messages.error(request, 'Invalid username or password')
+    return render(request, 'registration/login.html')
 
 def signup(request):
     form = ProfileForm()

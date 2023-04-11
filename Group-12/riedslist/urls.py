@@ -22,6 +22,10 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='main_pages/mainpage.html'), name='home'),
     path('admin/', admin.site.urls),
     path('account/', include("django.contrib.auth.urls")),
-    path('account/login/', user_view.login_view, name='login_view'),
-    path('signup/', user_view.signup, name='signup' )
+    path('login/', user_view.login_view, name='login_view'),
+    path('signup/', user_view.signup, name='signup' ),
+    path('buyer/', TemplateView.as_view(template_name='main_pages/buymainpage.html'), name='buyer'),
+    path('wishlist/', TemplateView.as_view(template_name='main_pages/wishlist.html'), name='wishlist'),
+    path('seller/', TemplateView.as_view(template_name='main_pages/seller_portal.html'), name='seller'),
 ]
+
