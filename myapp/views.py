@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.contrib import messages
 from .models import Profile, User
 from .models import Listing
+from django.contrib.auth import logout
 # Create your views here.
 
 
@@ -18,6 +19,9 @@ def buyer(request):
 
 def seller_portal(request):
     return render(request, "main_pages/seller_portal.html")
+
+def addlisting(request):
+    return render(request, "main_pages/addlisting.html")
 
 def get_account_type(user):
     try:
@@ -39,12 +43,18 @@ def login_view(request):
             print("User is logged in")
             if account_type == 'B':
                 print("User is a buyer")
-                return redirect(reverse('buyer'))
+                return redirect(reverse('get_all_product_names'))
             print("User is a seller")
-            return redirect(reverse('seller'))
+            return redirect(reverse('display_user_listings'))
         else:
             messages.error(request, 'Invalid username or password')
     return render(request, 'registration/login.html')
+
+def logout_view(request):
+    
+    # remove the reference to the user object
+    request.user = None
+    return redirect(reverse('home'))
 
 def signup(request):
     form = ProfileForm()
@@ -69,6 +79,35 @@ def signup(request):
 
 @login_required
 def display_user_listings(request):
-    user_listings = Listing.objects.filter(sellerID=request.user.id)
-    return render(request, 'user_listings.html', {'listings': user_listings})
+    user_listings = Listing.objects.filter(sellerID=request.user.id).values_list('productName', flat=True)
+    return render(request, 'main_pages/seller_portal.html', {'product_names': user_listings})
 
+def get_all_product_names(request):
+    all_products = Listing.objects.all()
+    #.values_list('productName', flat=True)
+    return render(request, 'main_pages/buymainpage.html', {'products': all_products})
+
+@login_required
+def add_listing(request):
+    if request.method == 'POST':
+        # Get the form data from the request
+        item_name = request.POST['item-name']
+        description = request.POST['description']
+        price = float(request.POST['price'])
+
+        # Create a new listing object and set its attributes
+        listing = Listing()
+        listing.productName = item_name
+        listing.desc = description
+        listing.price = price
+        listing.sellerID = request.user.profile.pk
+        listing.productID = request.user.profile.pk
+        listing.listingID = request.user.profile.pk
+
+        # Save the listing to the database
+        listing.save()
+
+        # Redirect to the listing detail page
+        return redirect(reverse('display_user_listings'))
+
+    return render(request, 'listingadder/')
