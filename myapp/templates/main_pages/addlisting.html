@@ -63,22 +63,23 @@ button[type="submit"]:hover {
 <body>
 	<div class="form-container">
 		<h1>Add Item Listing</h1>
-		<form>
-			<label for="item-name">Item Name</label>
-			<input type="text" id="item-name" name="item-name" required>
-			
+  <form method="POST" enctype="multipart/form-data" action="{% url 'add_listing' %}">
+    {% csrf_token %}
 
-			<label for="description">Description</label>
-			<textarea id="description" name="description" rows="4" cols="50"></textarea>
+    <label for="item-name">Item Name</label>
+    <input type="text" id="item-name" name="item-name" required>
 
-			<label for="price">Price</label>
-			<input type="number" id="price" name="price" min="0" step="0.01" required>
+    <label for="description">Description</label>
+    <textarea id="description" name="description" rows="4" cols="50"></textarea>
 
-			<label for="image">Image</label>
-			<input type="file" id="image" name="image">
+    <label for="price">Price</label>
+    <input type="number" id="price" name="price" min="0" step="0.01" required>
 
-			<button type="submit">Add Listing</button>
-		</form>
+    <!-- <label for="image">Image</label>
+    <input type="file" id="image" name="image"> -->
+
+    <button type="submit">Add Listing</button>
+  </form>
 	</div>
 </body>
 </html>
