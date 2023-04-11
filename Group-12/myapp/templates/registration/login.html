@@ -80,10 +80,10 @@
             {% csrf_token %}
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br>
-            {% csrf_token %}
+            
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required><br>
-            {% csrf_token %}
+            
             <button type="submit" name="login">Login</button>
         </form>
         <button onclick="location.href='/signup/';">Sign up</button>

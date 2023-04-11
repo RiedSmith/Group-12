@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
 from .models import Profile, User
+from .models import Listing
 # Create your views here.
 
 
@@ -16,7 +17,7 @@ def buyer(request):
     return render(request, "main_pages/buymainpage.html")
 
 def seller_portal(request):
-    return render(request, "main_pages/buymainpage.html")
+    return render(request, "main_pages/seller_portal.html")
 
 def get_account_type(user):
     try:
@@ -66,5 +67,8 @@ def signup(request):
         form = ProfileForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-    
+@login_required
+def display_user_listings(request):
+    user_listings = Listing.objects.filter(sellerID=request.user.id)
+    return render(request, 'user_listings.html', {'listings': user_listings})
 
