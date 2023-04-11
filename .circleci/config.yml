@@ -1,0 +1,13 @@
+version: 2.1
+
+# See: https://circleci.com/docs/configuration-reference/#jobs
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.10.1
+
+
+    steps:
+      - checkout
+      - run: pip install -r requirements.txt
+      - run: python manage.py test
