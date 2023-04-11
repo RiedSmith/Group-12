@@ -5,9 +5,16 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.10.1
+        environment:
+          MYSQL_DATABASE: django_riedslist
+          MYSQL_USER: root
+          MYSQL_PASSWORD: Mosquito_Gamer_7411
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_PORT: 3306
 
 
     steps:
       - checkout
+      - run: sudo apt-get update && sudo apt-get install -y mysql-client
       - run: pip install -r requirements.txt
       - run: python manage.py test
