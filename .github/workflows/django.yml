@@ -13,7 +13,15 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.9]
+        
+    services:
+      mysql:
+        image: mysql:8.0.32
+        env:
+          MYSQL_ROOT_PASSWORD: os.environ.get('DB_NAME')
+          MYSQL_DATABASE: 127.0.0.1 
+        ports: ['3306:3306']
 
     steps:
     - uses: actions/checkout@v3
@@ -28,3 +36,10 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+      env: 
+        DBENGINE: django.db.backends.mysql
+        DBNAME: os.environ.get('DB_NAME')
+        DBUSER: root
+        DBPASSWORD: os.environ.get('DB_NAME')
+        DBHOST: 127.0.0.1
+        DBPORT: $
