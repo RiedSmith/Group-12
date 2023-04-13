@@ -1,25 +1,31 @@
+{% extends "main_pages/base.html" %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
-<!DOCTYPE html>
-
-{% extends 'main_pages/base.html' %}
-<html>
-<head>
-    <title>Login Form</title>
-</head>
-<body>
-    <div class="login-form">
-        <h1>Login</h1>
-        <form action="{% url 'login_view' %}" method="POST">
-            {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
-            
-            <button type="submit" name="login">Login</button>
-        </form>
-        <button onclick="location.href='/signup/';">Sign up</button>
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4>Login</h4>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'login_view' %}" method="POST">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+    
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+    
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+      </div>
     </div>
-</body>
-</html>
+  </div>
+</div>
+{% endblock %}
+

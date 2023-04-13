@@ -3,6 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.forms import ModelForm
 from myapp.models import Profile
+from django import forms
+from django.forms.widgets import ClearableFileInput
+from .models import Listing
+
 
 
 account_type_choices = [
@@ -22,3 +26,11 @@ class ProfileForm(UserCreationForm):
         model = User
         fields = ('username','password1', 'password2',)
         labels = {'account_type' : 'Account Type'}
+
+class ListingForm(forms.ModelForm):
+    class Meta:
+        model = Listing
+        fields = ['productName', 'desc', 'price', 'image']
+        widgets = {
+            'image': ClearableFileInput(attrs={'multiple': False}),
+        }

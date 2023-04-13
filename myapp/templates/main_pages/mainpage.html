@@ -1,171 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <style>
-    /* Reset styles for improved cross-browser compatibility */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+{% extends "main_pages/base.html" %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
-body {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-}
+{% block content %}
 
-header {
-  background-color: #333;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h1>Welcome to Our Online Store</h1>
+                <p>Shop the latest trends in fashion, home decor, and more at our online store.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-header h1 {
-  font-size: 2rem;
-  margin: 0;
-}
+<!-- Featured Products -->
+<section class="featured-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Featured Products</h2>
+            </div>
+        </div>
+        <div class="row">
+          {% for listing in listings %}
+          <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                  <img class="card-img-top" src="{{ listing.image.url }}" alt="{{ listing.product_name }}">
+                  <div class="card-body">
+                      <p class="card-text">{{ listing.product_name }}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <small class="text-muted">{{ listing.price }}</small>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+        </div>
+    </div>
+</section>
 
-header form {
-  display: flex;
-}
+<!-- About Us Section -->
+<section class="about-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>About Us</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>We are a team of passionate individuals dedicated to providing our customers with the best shopping experience possible. Our online store offers a wide variety of products at affordable prices, and we are constantly adding new items to our inventory.</p>
+            </div>
+            <div class="col-md-6">
+                <p>Whether you're looking for the latest fashion trends or stylish home decor, we've got you covered. Our customer service team is always available to assist you with any questions or concerns you may have, so feel free to contact us anytime.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-header input[type="text"] {
-  padding: 0.5rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-header button[type="submit"] {
-  background-color: #fff;
-  color: #333;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5rem;
-  margin-left: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-main {
-  padding: 2rem;
-}
-
-main h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-main ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-main li {
-  flex-basis: 30%;
-  margin-bottom: 2rem;
-}
-
-main a {
-  display: block;
-  text-align: center;
-}
-
-main img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
-main h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-main p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-footer {
-  background-color: #f2f2f2;
-  padding: 1rem;
-  text-align: center;
-}
-
-footer ul {
-  list-style: none;
-  margin-bottom: 0.5rem;
-}
-
-footer li {
-  display: inline-block;
-  margin-right: 1rem;
-}
-
-footer li:last-child {
-  margin-right: 0;
-}
-
-footer a {
-  color: #333;
-  text-decoration: none;
-}
-
-footer p {
-  font-size: 0.8rem;
-}
-  </style>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RiedsList</title>
-  <!-- Include CSS and JavaScript files -->
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Include header section -->
-  <header>
-    <h1>ReidsList</h1>
-    <nav>
-      <ul>
-        <li><a href="">Home</a></li>
-        <li><a href="/signup/">Register</a></li>
-        <li><a href="/login/">Login</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Include main section for product listings -->
-  <main>
-    <section>
-      <h2>Featured Products</h2>
-      <ul>
-        {% for product in products %}
-        <li>
-          <a href="#">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            <h3>{{ product }}</h3>
-            <p>${{ product.price }}</p>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </section>
-  </main>
-
-  <!-- Include footer section -->
-  <footer>
-    <ul>
-      <li><a href="#">Privacy Policy</a></li>
-      <li><a href="#">Terms of Service</a></li>
-    </ul>
-    <p>&copy; 2023 RiedsList. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+{% endblock %}
