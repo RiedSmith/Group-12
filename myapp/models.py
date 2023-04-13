@@ -53,3 +53,8 @@ class Messages(models.Model):
 class Watchlist(models.Model):
     Owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     item = models.ManyToManyField(Listing)
+
+
+class ShoppingCart(models.Model):
+    listing = models.ManyToManyField(Listing)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)

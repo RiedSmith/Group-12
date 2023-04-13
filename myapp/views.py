@@ -50,8 +50,7 @@ def login_view(request):
             messages.error(request, 'Invalid username or password')
     return render(request, 'registration/login.html')
 
-def logout_view(request):
-    
+def logout_view(request):    
     # remove the reference to the user object
     request.user = None
     return redirect(reverse('main_get_all_product_names'))
@@ -116,3 +115,4 @@ def add_listing(request):
         return redirect(reverse('display_user_listings'))
 
     return render(request, 'listingadder/')
+
