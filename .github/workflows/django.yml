@@ -33,10 +33,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Create database
-      run: |
-        mysql -u ${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }} -h localhost -e "CREATE DATABASE IF NOT EXISTS ${{ env.MYSQL_DATABASE }};"
-
     - name: Run tests
       env:
         DATABASE_URL: mysql://${{ env.MYSQL_USER }}:${{ env.MYSQL_PASSWORD }}@localhost/${{ env.MYSQL_DATABASE }}
