@@ -2,16 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
 # -*- coding: utf-8 -*-
 # Create your models here.
 # Models are the way we interact with the database
 
 class Listing(models.Model):
-    productName = models.CharField(max_length=200, blank="", default = "item")
+    productName = models.CharField(max_length=200, blank=' ', default = "item")
     sellerID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', default=1)
-    dateAdded = models.DateTimeField(auto_now=False, auto_now_add = True, null=True)
+    dateAdded = models.DateTimeField(default=datetime.now, blank=' ')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    desc = models.CharField(max_length=200, blank="", default="text")
+    desc = models.CharField(max_length=200, blank=' ', default="text")
     image = models.ImageField(upload_to='images/', null = True)
 
     def __str__(self):
@@ -24,7 +25,7 @@ class Profile(models.Model):
         ('B', 'Buyer'),
         ('S', 'Seller'),
     ]
-    account_type = models.CharField(max_length=10, choices=account_type_choices, null = True)
+    account_type = models.CharField(max_length=10, choices=account_type_choices, default="B")
     location = models.CharField(max_length=30, blank="", default="place")
     
     def __str__(self):
@@ -41,10 +42,10 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Watchlist(models.Model):
-    Owner = models.ForeignKey(User, on_delete=models.CASCADE, null =True)
+    Owner = models.ForeignKey(User, on_delete=models.CASCADE, blank="")
     item = models.ManyToManyField(Listing)
 
 
 class ShoppingCart(models.Model):
     listing = models.ManyToManyField(Listing)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank="")
