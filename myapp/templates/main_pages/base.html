@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-{% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% block head %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+{% endblock %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">

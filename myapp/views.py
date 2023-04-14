@@ -79,6 +79,7 @@ def signup(request):
 def display_user_listings(request):
     print("Looking for listings...")
     user_listings = Listing.objects.filter(sellerID=request.user)
+    print("Listings found")
     return render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
 
 def get_all_product_names(request):

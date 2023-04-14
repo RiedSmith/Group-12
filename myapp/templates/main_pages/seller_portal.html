@@ -1,10 +1,11 @@
 {% extends 'main_pages/base.html' %}
 {% block head %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+  {% load static %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+  {% bootstrap_javascript %}
 {% endblock %}
-{% load bootstrap5 %}
-{% bootstrap_css %}
-{% load static %}
 
 {% block content %}
 <div class="container">
