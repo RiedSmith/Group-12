@@ -19,8 +19,8 @@ jobs:
       mysql:
         image: mysql:8.0.32
         env:
-          MYSQL_ROOT_PASSWORD: Mosquito_Gamer_7411
-          MYSQL_DATABASE: django_riedslist 
+          MYSQL_DATABASE: testdb
+          MYSQL_ROOT_PASSWORD: testrootpass
         ports: ['3306:3306']
 
     steps:
@@ -38,8 +38,8 @@ jobs:
         python manage.py test
       env: 
         DBENGINE: django.db.backends.mysql
-        DBNAME: django_riedslist
+        DBNAME: testdb
         DBUSER: root
-        DBPASSWORD: Mosquito_Gamer_7411
+        DBPASSWORD: testrootpass
         DBHOST: 127.0.0.1
         DBPORT: $
