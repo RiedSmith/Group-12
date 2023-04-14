@@ -34,6 +34,7 @@ urlpatterns = [
     path('logout/', user_view.logout_view, name='logout_view'),
     path('addlisting/', user_view.add_listing, name='addlisting'),
     path('displaylisting/', user_view.display_user_listings, name='display_user_listings'),
+    path('deletelistings/', user_view.delete_listing,name='delete_listing'),
     #path('displayall/', user_view.get_all_product_names, name='get_all_product_names'),
 ]
 

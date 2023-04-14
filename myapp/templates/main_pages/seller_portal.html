@@ -1,10 +1,12 @@
 {% extends 'main_pages/base.html' %}
-
+{% block head %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
+{% endblock %}
 {% load bootstrap5 %}
 {% bootstrap_css %}
-{% bootstrap_javascript %}
-{% block content %}
+{% load static %}
 
+{% block content %}
 <div class="container">
     <h1 class="my-4">My Listings</h1>
     <a href="{% url 'addlisting' %}" class="btn btn-primary mb-4">Add a new listing</a>
@@ -28,14 +30,16 @@
         {% endfor %}
     </div>
 </div>
-{% endblock %}
+
 {% block javascript %}
   <script type="text/javascript">
+    console.log("AJAX script loaded")
     $(document).ready(function() {
       $('.btn-delete').click(function() {
+        console.log("Button clicked..");
         var listing_id = $(this).data('id');
         $.ajax({
-          url: "{% url 'delete_listing' %}",
+          url: "/deletelistings/",
           method: "POST",
           data: {
             listing_id: listing_id,
@@ -46,6 +50,7 @@
             location.reload();
           },
           error: function(xhr, status, error) {
+            console.log(xhr.responseText);
             console.error(xhr.responseText);
           }
         });
@@ -53,4 +58,4 @@
     });
   </script>
 {% endblock %}
-
+{% endblock %}

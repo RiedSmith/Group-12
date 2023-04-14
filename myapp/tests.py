@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from myapp.forms import ProfileForm
+from .models import *
 
 # Create your tests here.
 class ProfileFormTestCase(TestCase):
