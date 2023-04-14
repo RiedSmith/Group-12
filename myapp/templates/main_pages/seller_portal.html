@@ -14,10 +14,9 @@
     <div class="row">
       <h1 class = "my-4">Current Listings: </h1>
         {% for listing in listings %}
-        <script>console.log("In the for loop")</script>
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                <img class="card-img-top" src="{{ listing.image.url }}" alt="{{ listing.productName }} image">
+                <img class="card-img-top" src="{{ listing.image.url }}" alt="{{ listing.productName }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ listing.productName }}</h5>
                     <p class="card-text">{{ listing.desc }}</p>

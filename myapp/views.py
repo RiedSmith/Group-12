@@ -83,13 +83,14 @@ def display_user_listings(request):
     return render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
 
 def get_all_product_names(request):
+    
     all_products = Listing.objects.all()
     
-    return render(request, 'main_pages/buymainpage.html', {'products': all_products})
+    return render(request, 'main_pages/buymainpage.html', {'listings': all_products})
 
 def main_get_all_product_names(request):
     all_products = Listing.objects.all()
-    return render(request, 'main_pages/mainpage.html', {'products': all_products})
+    return render(request, 'main_pages/mainpage.html', {'listings': all_products})
 
 @login_required
 def add_listing(request):
