@@ -37,6 +37,6 @@ jobs:
 
     - name: Run tests
       env:
-        DATABASE_URL: mysql://${{ env.MYSQL_USER }}:${{ env.MYSQL_PASSWORD }}@localhost/${{ env.MYSQL_DATABASE }}
+        DATABASE_URL: mysql://${{ user }}:${{ pass }}@localhost/${{ django_riedsdb }}
       run: |
         python manage.py test
