@@ -2,43 +2,45 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.9]
-        
+
     services:
       mysql:
-        image: mysql:8.0.32
+        image: mysql:
         env:
-          MYSQL_DATABASE: testdb
-          MYSQL_ROOT_PASSWORD: testrootpass
-        ports: ['3306:3306']
+          MYSQL_DATABASE: "django_riedsdb"
+          MYSQL_USER: "root"
+          MYSQL_PASSWORD: "ChummyFunBun!@"
+          MYSQL_ROOT_PASSWORD: " "
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
+        python-version: 3.9
+
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run Tests
+
+    - name: Create database
+      run: |
+        mysql -u ${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }} -h localhost -e "CREATE DATABASE IF NOT EXISTS ${{ env.MYSQL_DATABASE }};"
+
+    - name: Run tests
+      env:
+        DATABASE_URL: mysql://${{ env.MYSQL_USER }}:${{ env.MYSQL_PASSWORD }}@localhost/${{ env.MYSQL_DATABASE }}
       run: |
         python manage.py test
-      env: 
-        DBENGINE: django.db.backends.mysql
-        DBNAME: testdb
-        DBUSER: root
-        DBPASSWORD: testrootpass
-        DATABASE_ENDPOINT: 127.0.0.1
