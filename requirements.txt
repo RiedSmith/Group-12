@@ -12,3 +12,8 @@ python-dotenv==1.0.0
 soupsieve==2.4
 sqlparse==0.4.3
 tzdata==2023.3
+Django==4.2
+PyMySQL==1.0.3      
+python-dotenv==1.0.0
+sqlparse==0.4.3     
+tzdata==2023.3
