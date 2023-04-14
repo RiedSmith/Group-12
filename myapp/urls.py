@@ -5,7 +5,7 @@ from myapp import views as user_view
 from . import views
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='main_pages/mainpage.html'), name='home'),
+    path('', views.main_get_all_product_names, name='get_stuff'),
     path('admin/', admin.site.urls),
     path('account/', include("django.contrib.auth.urls")),
     path('login/', user_view.login_view, name='login_view'),
@@ -14,8 +14,7 @@ urlpatterns = [
     path('wishlist/', TemplateView.as_view(template_name='main_pages/wishlist.html'), name='wishlist'),
     path('seller/', TemplateView.as_view(template_name='main_pages/seller_portal.html'), name='seller'),
     path('logout/', user_view.logout_view, name='logout_view'),
-    path('add_listing/', user_view.add_listing, name='add_listing'),
-    path('seller/listingadder/', TemplateView.as_view(template_name='main_pages/addlisting.html'), name='addlisting'),
+    #path('addlisting/', user_view.add_listing, name='addlisting'),
     path('displaylisting/', user_view.display_user_listings, name='display_user_listings'),
 ]
 

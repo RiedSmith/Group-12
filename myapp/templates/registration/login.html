@@ -1,92 +1,31 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Login Form</title>
-    <style>
-        /* Basic CSS for the login form */
-        .login-form {
-            width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .login-form input {
-            width: 90%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        .login-form button {
-            width: 50%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-form">
-        <h1>Login</h1>
-        <form method="post" action="{% url 'login_view' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" name="login">Login</button>
-        </form>
-        <button onclick="location.href='/signup/';">Sign up</button>
-    </div>
-</body>
-</html> -->
+{% extends "main_pages/base.html" %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login Form</title>
-    <style>
-        /* Basic CSS for the login form */
-        .login-form {
-            width: 300px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .login-form input {
-            width: 90%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-        .login-form button {
-            width: 50%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-form">
-        <h1>Login</h1>
-        <form action="{% url 'login_view' %}" method="POST">
-            {% csrf_token %}
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required><br>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
-            
-            <button type="submit" name="login">Login</button>
-        </form>
-        <button onclick="location.href='/signup/';">Sign up</button>
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4>Login</h4>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'login_view' %}" method="POST">
+                {% csrf_token %}
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+    
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+    
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+      </div>
     </div>
-</body>
-</html>
+  </div>
+</div>
+{% endblock %}
+

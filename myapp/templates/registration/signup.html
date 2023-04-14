@@ -1,9 +1,25 @@
-<!DOCTYPE html>
-<html>
-<h2>Sign up</h2>
-  <form action = "{% url 'signup' %} " method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button label="Submit" type="submit", value="Register"></button>
-  </form>
-</html>
+{% extends 'main_pages/base.html' %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">Sign Up</div>
+          <div class="card-body">
+            <form method="post" action="{% url 'signup' %}">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              {% buttons %}
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+              {% endbuttons %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
