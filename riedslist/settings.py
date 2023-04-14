@@ -86,9 +86,9 @@ WSGI_APPLICATION = 'riedslist.wsgi.application'
 DATABASES = {
     'test': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': test,
-        'USER': test_user,
-        'PASSWORD': test_pass,
+        'NAME': 'test'
+        'USER': 'test_user',
+        'PASSWORD': 'test_pass',
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
