@@ -14,10 +14,10 @@ jobs:
       mysql:
         image: mysql:8.0.32
         env:
-          MYSQL_DATABASE: testdb
+          MYSQL_DATABASE: django_riedsdb
           MYSQL_ROOT_PASSWORD: testrootpass
-          MYSQL_USER: testuser
-          MYSQL_PASSWORD: testpass
+          MYSQL_USER: root
+          MYSQL_PASSWORD: ChummyFunBun!@
         ports: ['3306:3306']
         
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
