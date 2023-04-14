@@ -41,5 +41,4 @@ jobs:
         DBNAME: testdb
         DBUSER: root
         DBPASSWORD: testrootpass
-        DBHOST: 127.0.0.1
-        DBPORT: $
+        DATABASE_ENDPOINT: 127.0.0.1
