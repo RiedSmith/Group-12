@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from .forms import ProfileForm, ListingForm
@@ -111,4 +111,4 @@ def delete_listing(request):
         listing.delete()
         return redirect('display_user_listings')
     print("What has happened??")
-    return JsonResponse({"success": False})
+    return HttpResponseBadRequest("Invalid request")
