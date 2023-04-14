@@ -9,7 +9,7 @@ from datetime import datetime
 
 class Listing(models.Model):
     productName = models.CharField(max_length=200, blank=' ', default = "item")
-    sellerID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', null=True)
+    sellerID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', default=None)
     dateAdded = models.DateTimeField(default=datetime.now, blank=' ')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     desc = models.CharField(max_length=200, blank=' ', default="text")

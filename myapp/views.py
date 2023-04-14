@@ -94,11 +94,18 @@ def main_get_all_product_names(request):
 @login_required
 def add_listing(request):
     if request.method == 'POST':
+        print("request time")
         form = ListingForm(request.POST, request.FILES)
+        print("form is acquired")
         if form.is_valid():
-            form.save()
+            print("form is valid")
+            listing = form.save(request.user)
+            print("Form is saved")
             return redirect('display_user_listings')
+        else:
+            print(form.errors)
     else:
+        print("No request")
         form = ListingForm()
     return render(request, 'main_pages/addlisting.html', {'form': form})
 
