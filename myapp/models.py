@@ -9,7 +9,7 @@ from datetime import datetime
 
 class Listing(models.Model):
     productName = models.CharField(max_length=200, blank=' ', default = "item")
-    sellerID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', default=1)
+    sellerID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', null=True)
     dateAdded = models.DateTimeField(default=datetime.now, blank=' ')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     desc = models.CharField(max_length=200, blank=' ', default="text")
@@ -42,7 +42,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Watchlist(models.Model):
-    Owner = models.ForeignKey(User, on_delete=models.CASCADE, blank="")
+    Owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     item = models.ManyToManyField(Listing)
 
 
