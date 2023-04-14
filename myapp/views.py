@@ -1,13 +1,14 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-from .forms import ProfileForm
+from .forms import ProfileForm, ListingForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
 from .models import Profile, User
 from .models import Listing
 from django.contrib.auth import logout
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -20,8 +21,6 @@ def buyer(request):
 def seller_portal(request):
     return render(request, "main_pages/seller_portal.html")
 
-def addlisting(request):
-    return render(request, "main_pages/addlisting.html")
 
 def get_account_type(user):
     try:
@@ -78,8 +77,9 @@ def signup(request):
 
 @login_required
 def display_user_listings(request):
-    user_listings = Listing.objects.filter(sellerID=request.user.id).values_list('productName', flat=True)
-    return render(request, 'main_pages/seller_portal.html', {'product_names': user_listings})
+    print("Looking for listings...")
+    user_listings = Listing.objects.filter(sellerID=request.user)
+    return render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
 
 def get_all_product_names(request):
     all_products = Listing.objects.all()
@@ -88,31 +88,27 @@ def get_all_product_names(request):
 
 def main_get_all_product_names(request):
     all_products = Listing.objects.all()
-    
     return render(request, 'main_pages/mainpage.html', {'products': all_products})
 
 @login_required
 def add_listing(request):
     if request.method == 'POST':
-        # Get the form data from the request
-        item_name = request.POST['item-name']
-        description = request.POST['description']
-        price = float(request.POST['price'])
+        form = ListingForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('display_user_listings')
+    else:
+        form = ListingForm()
+    return render(request, 'main_pages/addlisting.html', {'form': form})
 
-        # Create a new listing object and set its attributes
-        listing = Listing()
-        listing.productName = item_name
-        listing.desc = description
-        listing.price = price
-        listing.sellerID = request.user.profile.pk
-        listing.productID = request.user.profile.pk
-        listing.listingID = request.user.profile.pk
-
-        # Save the listing to the database
-        listing.save()
-
-        # Redirect to the listing detail page
-        return redirect(reverse('display_user_listings'))
-
-    return render(request, 'listingadder/')
-
+@login_required
+def delete_listing(request):
+    if request.method == "POST":
+        print("Request")
+        listing_id = request.POST.get("listing_id")
+        listing = Listing.objects.get(id=listing_id)
+        print("Home stretch")
+        listing.delete()
+        return redirect('display_user_listings')
+    print("What has happened??")
+    return JsonResponse({"success": False})

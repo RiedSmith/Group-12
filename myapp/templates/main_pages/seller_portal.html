@@ -1,129 +1,56 @@
-<!DOCTYPE html>
-<html>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-}
+{% extends 'main_pages/base.html' %}
 
-header {
-  background-color: #333;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
 
-header h1 {
-  font-size: 2rem;
-  margin: 0;
-}
+<div class="container">
+    <h1 class="my-4">My Listings</h1>
+    <a href="{% url 'addlisting' %}" class="btn btn-primary mb-4">Add a new listing</a>
+    <div class="row">
+      <h1 class = "my-4">Current Listings: </h1>
+        {% for listing in listings %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img class="card-img-top" src="{{ listing.image.url }}" alt="{{ listing.productName }} image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ listing.productName }}</h5>
+                    <p class="card-text">{{ listing.desc }}</p>
+                </div>
+                <div class="card-footer">
+                    <p class="card-text">{{ listing.price }}</p>
+                    <button class="btn btn-danger btn-delete" data-id="{{ listing.id }}">Delete</button>
+                </div>
 
-header form {
-  display: flex;
-}
-main {
-  padding: 1rem;
-}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.btn-delete').click(function() {
+        var listing_id = $(this).data('id');
+        $.ajax({
+          url: "{% url 'delete_listing' %}",
+          method: "POST",
+          data: {
+            listing_id: listing_id,
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+          },
+          success: function(data) {
+            // Reload the page to remove the deleted listing
+            location.reload();
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
 
-main h2 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-main ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-main li {
-  flex-basis: 20%;
-  margin-bottom: 2rem;
-}
-
-main a {
-  display: block;
-  text-align: center;
-}
-
-main img {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
-main h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-main p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-footer {
-  background-color: #f2f2f2;
-  padding: 1rem;
-  text-align: center;
-}
-
-footer ul {
-  list-style: none;
-  margin-bottom: 0.5rem;
-}
-
-footer li {
-  display: inline-block;
-  margin-right: 1rem;
-}
-
-footer li:last-child {
-  margin-right: 0;
-}
-
-footer a {
-  color: #333;
-  text-decoration: none;
-}
-
-footer p {
-  font-size: 0.8rem;
-}
-</style>
-<head>
-	<title>Seller Portal</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<header>
-		<h1>Seller Portal</h1>
-        <nav>
-		<ul>
-			<li><a href="s">Home</a></li>
-			<li><a href="listingadder/">Add a Listing</a></li>
-			<li><a href="{% url 'logout_view' %}">Logout</a></li>
-		</ul>
-	</nav>
-	</header>
-	<main></main>
-			<section class="section1" action="{% url 'display_user_listings' %}">
-				<h1>Your Listings</h1>
-				<ul>
-				  {% for product_name in product_names %}
-					<li>{{ product_name }}</li>
-				  {% empty %}
-					<li>You don't have any listings yet.</li>
-				  {% endfor %}
-				</ul>
-			</section>
-	</main>
-	<footer>
-		<p>&copy; 2023 Seller Portal. All rights reserved.</p>
-	</footer>
-</body>
-</html>

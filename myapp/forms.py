@@ -33,4 +33,7 @@ class ListingForm(forms.ModelForm):
         fields = ['productName', 'desc', 'price', 'image']
         widgets = {
             'image': ClearableFileInput(attrs={'multiple': False}),
+            'productName': forms.TextInput(attrs={'class': 'form-control'}),
+            'desc': forms.TextInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
         }

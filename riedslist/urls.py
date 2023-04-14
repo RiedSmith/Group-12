@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView, View
 from myapp import views as user_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -28,11 +30,12 @@ urlpatterns = [
     path('signup/', user_view.signup, name='signup' ),
     path('buyer/', TemplateView.as_view(template_name='main_pages/buymainpage.html'), name='buyer'),
     path('wishlist/', TemplateView.as_view(template_name='main_pages/wishlist.html'), name='wishlist'),
-    path('seller/', TemplateView.as_view(template_name='main_pages/seller_portal.html'), name='seller'),
+    path('seller/', user_view.display_user_listings, name='seller'),
     path('logout/', user_view.logout_view, name='logout_view'),
-    path('add_listing/', user_view.add_listing, name='add_listing'),
-    path('displaylisting/listingadder/', TemplateView.as_view(template_name='main_pages/addlisting.html'), name='addlisting'),
+    path('addlisting/', user_view.add_listing, name='addlisting'),
     path('displaylisting/', user_view.display_user_listings, name='display_user_listings'),
-    path('displayall/', user_view.get_all_product_names, name='get_all_product_names'),
+    #path('displayall/', user_view.get_all_product_names, name='get_all_product_names'),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
