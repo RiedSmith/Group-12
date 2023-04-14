@@ -37,6 +37,6 @@ jobs:
 
     - name: Run tests
       env:
-        DATABASE_URL: mysql://$user:$pass@localhost/$django_riedslistdb
+        DATABASE_URL: mysql://$os.environ.get('DB_USER'):$os.environ.get('DB_PASS')@localhost/$os.environ.get('DB_NAME')
       run: |
         python manage.py test
