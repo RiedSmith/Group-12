@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'riedslist.wsgi.application'
 DATABASES = {
     'test': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': django_riedslist,
+        'NAME': test,
         'USER': test_user,
         'PASSWORD': test_pass,
         'HOST': '127.0.0.1',
