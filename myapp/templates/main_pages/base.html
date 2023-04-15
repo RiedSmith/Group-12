@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-{% load bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
+{% block head %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+{% endblock %}
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -34,9 +36,9 @@
               {{ user.username }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/seller/">Profile</a></li>
+              <li><a class="dropdown-item" href="/portal/">Profile</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              <li><a class="dropdown-item" href="/logout/">Logout</a></li>
             </ul>
           </li>
           {% else %}
@@ -48,7 +50,7 @@
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="#">Cart</a>
+            <a class="nav-link" href="{% url 'cart' %}">Cart</a>
           </li>
         </ul>
       </div>

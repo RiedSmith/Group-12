@@ -37,3 +37,10 @@ class ListingForm(forms.ModelForm):
             'desc': forms.TextInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+    def save(self, user, commit=True):
+        listing = super(ListingForm, self).save(commit=False)
+        listing.sellerID = user
+        if commit:
+            listing.save()
+        return listing
