@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render,get_object_or_404
 from .forms import ProfileForm, ListingForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -15,12 +15,19 @@ from django.http import JsonResponse
 def home(request):
     return render(request, "main_pages/mainpage.html")
 
-def buyer(request):
+def buyer(request): #This renders the buyer profile
     return render(request, "main_pages/buymainpage.html")
 
-def seller_portal(request):
-    return render(request, "main_pages/seller_portal.html")
-
+def portal(request): #Context switch to change the destination of the profile button based on account type
+    user = request.user
+    acct_type = get_account_type(user)
+    if request.user.is_authenticated:
+        if acct_type == 'B':
+            return render(request, "main_pages/buyer_page.html")
+        else:
+            return redirect(reverse('display_user_listings'))
+    else:
+        return redirect(reverse('login_view'))
 
 def get_account_type(user):
     try:
@@ -30,20 +37,15 @@ def get_account_type(user):
         return None
     
 def login_view(request):
-    print("In login view")
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         account_type = get_account_type(user)
-        print("User is authenticated")
         if user is not None:
             login(request, user)
-            print("User is logged in")
             if account_type == 'B':
-                print("User is a buyer")
-                return redirect(reverse('get_all_product_names'))
-            print("User is a seller")
+                return redirect(reverse('main_get_all_product_names'))
             return redirect(reverse('display_user_listings'))
         else:
             messages.error(request, 'Invalid username or password')
@@ -77,16 +79,8 @@ def signup(request):
 
 @login_required
 def display_user_listings(request):
-    print("Looking for listings...")
     user_listings = Listing.objects.filter(sellerID=request.user)
-    print("Listings found")
     return render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
-
-def get_all_product_names(request):
-    
-    all_products = Listing.objects.all()
-    
-    return render(request, 'main_pages/buymainpage.html', {'listings': all_products})
 
 def main_get_all_product_names(request):
     all_products = Listing.objects.all()
@@ -95,29 +89,26 @@ def main_get_all_product_names(request):
 @login_required
 def add_listing(request):
     if request.method == 'POST':
-        print("request time")
         form = ListingForm(request.POST, request.FILES)
-        print("form is acquired")
         if form.is_valid():
-            print("form is valid")
             listing = form.save(request.user)
-            print("Form is saved")
             return redirect('display_user_listings')
         else:
             print(form.errors)
     else:
-        print("No request")
         form = ListingForm()
     return render(request, 'main_pages/addlisting.html', {'form': form})
 
 @login_required
-def delete_listing(request):
+def delete_listing(request): #Pretty self explanatory
     if request.method == "POST":
-        print("Request")
         listing_id = request.POST.get("listing_id")
         listing = Listing.objects.get(id=listing_id)
-        print("Home stretch")
         listing.delete()
         return redirect('display_user_listings')
-    print("What has happened??")
     return HttpResponseBadRequest("Invalid request")
+
+def listing_details(request, listing_id): #This is what we use to display a particular listing for the details html
+    listing = get_object_or_404(Listing, pk=listing_id)
+    return render(request, 'main_pages/listing_details.html', {'listing': listing})
+

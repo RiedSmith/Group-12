@@ -31,7 +31,8 @@
               <div class="card mb-4 box-shadow">
                   <img class="card-img-top" src="{{ listing.image.url }}" alt="{{ listing.productName }}">
                   <div class="card-body">
-                      <p class="card-title">{{ listing.productName }}</p>
+                    <p class="card-title" style="color: grey;"><a href="{{ listing.get_absolute_url }}">{{ listing.productName }}</a></p>
+                      <a href="{{ listing.get_absolute_url }}"></a>
                       <p class="card-text">{{ listing.desc }}</p>
                     </div>
                     <div class = "card-footer">

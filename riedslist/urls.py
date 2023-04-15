@@ -28,14 +28,14 @@ urlpatterns = [
     path('account/', include("django.contrib.auth.urls")),
     path('login/', user_view.login_view, name='login_view'),
     path('signup/', user_view.signup, name='signup' ),
-    path('buyer/', TemplateView.as_view(template_name='main_pages/buymainpage.html'), name='buyer'),
     path('wishlist/', TemplateView.as_view(template_name='main_pages/wishlist.html'), name='wishlist'),
-    path('seller/', user_view.display_user_listings, name='seller'),
+    path('portal/', user_view.portal, name='portal'),
     path('logout/', user_view.logout_view, name='logout_view'),
     path('addlisting/', user_view.add_listing, name='addlisting'),
     path('displaylisting/', user_view.display_user_listings, name='display_user_listings'),
     path('deletelistings/', user_view.delete_listing,name='delete_listing'),
     #path('displayall/', user_view.get_all_product_names, name='get_all_product_names'),
+    path('listings/<int:listing_id>/', user_view.listing_details, name='listing_details'),
 ]
 
 if settings.DEBUG:

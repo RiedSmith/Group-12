@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -17,6 +18,9 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.productName
+    
+    def get_absolute_url(self):
+        return reverse('listing_details', kwargs={'listing_id': self.id})
     
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
