@@ -34,8 +34,11 @@ urlpatterns = [
     path('addlisting/', user_view.add_listing, name='addlisting'),
     path('displaylisting/', user_view.display_user_listings, name='display_user_listings'),
     path('deletelistings/', user_view.delete_listing,name='delete_listing'),
+    path('add_to_cart/<int:listing_id>/', user_view.add_to_cart, name='add_to_cart'),
+    path('remove_from_cart/<int:listing_id>/', user_view.remove_from_cart, name='remove_from_cart'),
     #path('displayall/', user_view.get_all_product_names, name='get_all_product_names'),
     path('listings/<int:listing_id>/', user_view.listing_details, name='listing_details'),
+    path('cart/', user_view.cart_view, name = 'cart'),
 ]
 
 if settings.DEBUG:

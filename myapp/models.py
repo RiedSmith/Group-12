@@ -31,7 +31,7 @@ class Profile(models.Model):
     ]
     account_type = models.CharField(max_length=10, choices=account_type_choices, default="B")
     location = models.CharField(max_length=30, blank="", default="place")
-    
+    cart = models.ManyToManyField(Listing)
     def __str__(self):
         return self.user.username
     
@@ -48,8 +48,3 @@ def save_user_profile(sender, instance, **kwargs):
 class Watchlist(models.Model):
     Owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     item = models.ManyToManyField(Listing)
-
-
-class ShoppingCart(models.Model):
-    listing = models.ManyToManyField(Listing)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, blank="")

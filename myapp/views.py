@@ -52,8 +52,7 @@ def login_view(request):
     return render(request, 'registration/login.html')
 
 def logout_view(request):    
-    # remove the reference to the user object
-    request.user = None
+    logout(request)
     return redirect(reverse('main_get_all_product_names'))
 
 def signup(request):
@@ -112,3 +111,24 @@ def listing_details(request, listing_id): #This is what we use to display a part
     listing = get_object_or_404(Listing, pk=listing_id)
     return render(request, 'main_pages/listing_details.html', {'listing': listing})
 
+
+def add_to_cart(request, listing_id):
+    listing = get_object_or_404(Listing, id=listing_id)
+    user_profile = request.user.profile
+    user_profile.cart.add(listing)
+    return redirect('cart')
+
+def remove_from_cart(request, listing_id):
+    listing = get_object_or_404(Listing, id=listing_id)
+    user_profile = request.user.profile
+    user_profile.cart.remove(listing)
+    return redirect('cart')
+
+def cart_view(request):
+    user = request.user
+    if user.is_authenticated:
+        profile = user.profile
+        listings = profile.cart.all()
+        return render(request, 'main_pages/cart.html', {'listings': listings})
+    else:
+        return render(request, 'registration/signup.html')
