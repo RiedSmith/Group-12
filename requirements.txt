@@ -3,7 +3,9 @@ asgiref==3.6.0
 async-timeout==3.0.1
 attrs==20.3.0
 beautifulsoup4==4.12.2
+cffi==1.15.1
 chardet==3.0.4
+cryptography==40.0.2
 discord.py==1.6.0
 distlib==0.3.6
 Django==4.2
@@ -17,6 +19,7 @@ mysql==0.0.3
 mysqlclient==2.1.1
 pbr==5.11.1
 platformdirs==3.2.0
+pycparser==2.21
 PyMySQL==1.0.3
 python-dotenv==0.15.0
 soupsieve==2.4
