@@ -1,12 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render,get_object_or_404
-from .forms import ProfileForm, ListingForm
+from .forms import ProfileForm, ListingForm, BuyerProfileForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import messages
-from .models import Profile, User
-from .models import Listing
+from .models import Profile, User, Listing
 from django.contrib.auth import logout
 from django.http import JsonResponse
 # Create your views here.
@@ -23,7 +22,7 @@ def portal(request): #Context switch to change the destination of the profile bu
     acct_type = get_account_type(user)
     if request.user.is_authenticated:
         if acct_type == 'B':
-            return render(request, "main_pages/buyer_page.html")
+            return redirect(reverse('buyer_page'))
         else:
             return redirect(reverse('display_user_listings'))
     else:
@@ -151,13 +150,69 @@ def checkout(request):
     profile = user.profile
     cart_items = profile.cart.all()
 
+    # calculate total price of cart items
+    total_price = sum([item.price for item in cart_items])
+
+    # subtract total price from buyer's balance
+    if profile.balance < total_price:
+        messages.error(request, 'Insufficient balance for checkout.')
+        return redirect(reverse('buyer_page'))
+    profile.balance -= total_price
+    profile.save()
+
     for item in cart_items:
         # remove the item listing from the seller's account
+        listing = item
         # delete the listing object
-        item.delete()
+        listing.delete()
+
     # clear the user's cart
     profile.cart.clear()
 
     # display success message and redirect to main page
     messages.success(request, 'Checkout successful!')
     return redirect(reverse('main_get_all_product_names'))
+
+
+@login_required
+def add_balance(request):
+    print("Hello?")
+    if request.method == 'POST':
+        amount = int(request.POST['balance'])
+        print("Acquired the number")
+        if amount <= 0:
+            messages.error(request, 'Amount must be a positive integer.')
+        else:
+            request.user.profile.balance += amount
+            print("Adding")
+            request.user.profile.save()
+            messages.success(request, f'Added {amount} to your balance.')
+            print("This worked")
+        return redirect('buyer_page')
+    else:
+        print("Nice work")
+        return render(request, 'buyer_page.html')
+    
+@login_required
+def buyer_page(request):
+    if request.method == 'POST':
+        print("request")
+        if 'balance' in request.POST:
+            amount = request.POST.get('balance')
+            user_profile = request.user.profile
+            print("user profile is new")
+            user_profile.balance += int(amount)
+            print("balance saved")
+            user_profile.save()
+            messages.success(request, f'Balance updated successfully')
+            return redirect('buyer_page')
+
+        form = BuyerProfileForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            print("Form is valid")
+            form.save()
+            messages.success(request, f'Profile updated successfully')
+            return redirect('buyer_page')
+    else:
+        form = BuyerProfileForm(instance=request.user.profile)
+    return render(request, 'main_pages/buyer_page.html', {'form': form})

@@ -9,6 +9,10 @@
         <div class="col-md-6">
             <h2>Buyer Portal</h2>
             <hr>
+            <div class="mb-3">
+                <label for="balance" class="form-label">Balance:</label>
+                <input type="text" class="form-control" id="balance" name="balance" value="{{ user.profile.balance }}" readonly>
+            </div>
             <form method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
@@ -16,8 +20,16 @@
                     <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <input type="text" class="form-control" id="location" name="location" value="{{ user.profile.location }}">
+                    <form method="POST" action="{% url 'add_balance' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="balance" class="form-label">Add Balance</label>
+                            <input type="number" class="form-control" id="balance" name="balance" value="0">
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit">Add Balance</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="d-grid">
                     <button class="btn btn-primary" type="submit">Update</button>

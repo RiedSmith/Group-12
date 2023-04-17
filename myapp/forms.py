@@ -44,3 +44,16 @@ class ListingForm(forms.ModelForm):
         if commit:
             listing.save()
         return listing
+
+class BuyerProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['location', 'email', 'balance']
+        labels = {
+            'location': 'Location', 'email' : 'Email', 'balance' : 'Balance'
+        }
+        widgets = {
+            'location': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.TextInput(attrs={'class' : 'form-control'}),
+            'balance': forms.NumberInput(attrs={'class' : 'form-control'}),
+        }

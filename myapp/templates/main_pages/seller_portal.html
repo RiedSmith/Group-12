@@ -32,6 +32,19 @@
     </div>
 </div>
 
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2>Buyer Portal</h2>
+            <hr>
+            <div class="mb-3">
+                <label for="balance" class="form-label">Balance:</label>
+                <input type="text" class="form-control" id="balance" name="balance" value="{{ user.profile.balance }}" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% block javascript %}
   <script type="text/javascript">
     $(document).ready(function() {
@@ -55,6 +68,12 @@
             console.error(xhr.responseText);
           }
         });
+      });
+
+      $('.btn-check-balance').click(function() {
+        console.log("Check balance button clicked..");
+        var balance = $("#balance").val();
+        alert("Your balance is: " + balance);
       });
     });
   </script>
