@@ -25,6 +25,7 @@ class Listing(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     email = models.EmailField()
+    balance = models.IntegerField(default = 0)
     account_type_choices = [
         ('B', 'Buyer'),
         ('S', 'Seller'),

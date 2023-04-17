@@ -40,6 +40,7 @@ urlpatterns = [
     path('listings/<int:listing_id>/', user_view.listing_details, name='listing_details'),
     path('cart/', user_view.cart_view, name = 'cart'),
     path('search/', user_view.search_listings, name='search_listings'),
+    path('checkout/', user_view.checkout, name='checkout'),
 ]
 
 if settings.DEBUG:
