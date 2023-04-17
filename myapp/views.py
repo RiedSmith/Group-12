@@ -140,3 +140,28 @@ def search_listings(request):
             listings = Listing.objects.filter(productName__icontains=query)
             return render(request, 'main_pages/mainpage.html', {'listings': listings})
     return redirect(reverse('main_get_all_product_names'))
+
+@login_required
+def checkout(request):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect(reverse('login_view'))
+
+    # get user's profile and cart items
+    profile = user.profile
+    cart_items = profile.cart.all()
+
+    for item in cart_items:
+        # remove the item listing from the seller's account
+        seller_profile = item.sellerID.profile
+        seller_profile.listings.remove(item)
+
+        # delete the listing object
+        item.delete()
+
+    # clear the user's cart
+    profile.cart.clear()
+
+    # display success message and redirect to main page
+    messages.success(request, 'Checkout successful!')
+    return redirect(reverse('main_get_all_product_names'))
