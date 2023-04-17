@@ -7,7 +7,7 @@ from datetime import datetime
 # -*- coding: utf-8 -*-
 # Create your models here.
 # Models are the way we interact with the database
-
+ 
 class Listing(models.Model):
     productName = models.CharField(max_length=200, blank=' ', default = "item")
     sellerID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='listings', default=None)
@@ -21,7 +21,8 @@ class Listing(models.Model):
     
     def get_absolute_url(self):
         return reverse('listing_details', kwargs={'listing_id': self.id})
-    
+   
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     email = models.EmailField()
@@ -35,6 +36,8 @@ class Profile(models.Model):
     cart = models.ManyToManyField(Listing)
     def __str__(self):
         return self.user.username
+
+
     
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

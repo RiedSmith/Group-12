@@ -153,12 +153,8 @@ def checkout(request):
 
     for item in cart_items:
         # remove the item listing from the seller's account
-        seller_profile = item.sellerID.profile
-        seller_profile.listings.remove(item)
-
         # delete the listing object
         item.delete()
-
     # clear the user's cart
     profile.cart.clear()
 
