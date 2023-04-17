@@ -35,9 +35,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     
-    - name: Start MySQL service
-      run: |
-        sudo systemctl start mysql
 
     - name: Grant privileges to test user
       run: |
