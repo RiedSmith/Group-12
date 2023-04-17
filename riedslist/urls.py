@@ -39,6 +39,7 @@ urlpatterns = [
     #path('displayall/', user_view.get_all_product_names, name='get_all_product_names'),
     path('listings/<int:listing_id>/', user_view.listing_details, name='listing_details'),
     path('cart/', user_view.cart_view, name = 'cart'),
+    path('search/', user_view.search_listings, name='search_listings'),
 ]
 
 if settings.DEBUG:

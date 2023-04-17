@@ -17,6 +17,21 @@
     </div>
 </section>
 
+<!-- Search Bar Section -->
+<section class="search-bar-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search_listings' %}">
+                    {% csrf_token %}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Featured Products -->
 <section class="featured-section">
     <div class="container">

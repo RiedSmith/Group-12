@@ -132,3 +132,11 @@ def cart_view(request):
         return render(request, 'main_pages/cart.html', {'listings': listings})
     else:
         return render(request, 'registration/signup.html')
+    
+def search_listings(request):
+    if request.method == 'GET':
+        query = request.GET.get('q')
+        if query:
+            listings = Listing.objects.filter(productName__icontains=query)
+            return render(request, 'main_pages/mainpage.html', {'listings': listings})
+    return redirect(reverse('main_get_all_product_names'))
