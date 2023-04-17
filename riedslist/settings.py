@@ -93,9 +93,9 @@ DATABASES = {
         'PORT': '3306',
         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
         'TEST': {
-            'USER': 'user',
-            'PASSWORD': 'pass',
-            'NAME': 'test_database',
+            'USER': 'test_user',
+            'PASSWORD': 'test_pass',
+            'NAME': 'test_db',
                 }
 
     }
