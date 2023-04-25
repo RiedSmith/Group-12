@@ -14,8 +14,13 @@ from django.http import JsonResponse
 def home(request):
     return render(request, "main_pages/mainpage.html")
 
+@login_required(login_url='/login/')
 def buyer(request): #This renders the buyer profile
-    return render(request, "main_pages/buymainpage.html")
+    response = render(request, 'main_pages/buymainpage.html')
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return render(request, "main_pages/buymainpage.html")
 
 def portal(request): #Context switch to change the destination of the profile button based on account type
     user = request.user
@@ -75,29 +80,45 @@ def signup(request):
         form = ProfileForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-@login_required
+@login_required(login_url='/login/')
 def display_user_listings(request):
     user_listings = Listing.objects.filter(sellerID=request.user)
-    return render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
+    response = render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return render(request, 'main_pages/seller_portal.html', {'listings': user_listings})
 
 def main_get_all_product_names(request):
     all_products = Listing.objects.all()
-    return render(request, 'main_pages/mainpage.html', {'listings': all_products})
+    response = render(request, 'main_pages/mainpage.html', {'listings': all_products})
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return render(request, 'main_pages/mainpage.html', {'listings': all_products})
 
-@login_required
+@login_required(login_url='/login/')
 def add_listing(request):
     if request.method == 'POST':
         form = ListingForm(request.POST, request.FILES)
         if form.is_valid():
             listing = form.save(request.user)
-            return redirect('display_user_listings')
+            response = render(redirect('display_user_listings'))
+            response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            response['Expires'] = '0'
+            return response
+            # return redirect('display_user_listings')
         else:
             print(form.errors)
     else:
         form = ListingForm()
-    return render(request, 'main_pages/addlisting.html', {'form': form})
+    response = render(request, 'main_pages/addlisting.html', {'form': form})
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return render(request, 'main_pages/addlisting.html', {'form': form})
 
-@login_required
+
 def delete_listing(request): #Pretty self explanatory
     if request.method == "POST":
         listing_id = request.POST.get("listing_id")
@@ -106,9 +127,14 @@ def delete_listing(request): #Pretty self explanatory
         return redirect('display_user_listings')
     return HttpResponseBadRequest("Invalid request")
 
+login_required(login_url='/login/')
 def listing_details(request, listing_id): #This is what we use to display a particular listing for the details html
     listing = get_object_or_404(Listing, pk=listing_id)
-    return render(request, 'main_pages/listing_details.html', {'listing': listing})
+    response = render(request, 'main_pages/listing_details.html', {'listing': listing})
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return render(request, 'main_pages/listing_details.html', {'listing': listing})
 
 
 def add_to_cart(request, listing_id):
@@ -123,12 +149,17 @@ def remove_from_cart(request, listing_id):
     user_profile.cart.remove(listing)
     return redirect('cart')
 
+@login_required(login_url='/login/')
 def cart_view(request):
     user = request.user
     if user.is_authenticated:
         profile = user.profile
         listings = profile.cart.all()
-        return render(request, 'main_pages/cart.html', {'listings': listings})
+        response = render(request, 'main_pages/cart.html', {'listings': listings})
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response['Expires'] = '0'
+        return response
+        # return render(request, 'main_pages/cart.html', {'listings': listings})
     else:
         return render(request, 'registration/signup.html')
     
@@ -137,10 +168,18 @@ def search_listings(request):
         query = request.GET.get('q')
         if query:
             listings = Listing.objects.filter(productName__icontains=query)
-            return render(request, 'main_pages/mainpage.html', {'listings': listings})
-    return redirect(reverse('main_get_all_product_names'))
+            response = render(request, 'main_pages/mainpage.html', {'listings': listings})
+            response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+            response['Expires'] = '0'
+            return response
+            # return render(request, 'main_pages/mainpage.html', {'listings': listings})
+    response = render(redirect(reverse('main_get_all_product_names')))
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return redirect(reverse('main_get_all_product_names'))
 
-@login_required
+@login_required(login_url='/login/')
 def checkout(request):
     user = request.user
     if not user.is_authenticated:
@@ -171,10 +210,14 @@ def checkout(request):
 
     # display success message and redirect to main page
     messages.success(request, 'Checkout successful!')
-    return redirect(reverse('main_get_all_product_names'))
+    response = render(redirect(reverse('main_get_all_product_names')))
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
+    # return redirect(reverse('main_get_all_product_names'))
 
 
-@login_required
+@login_required(login_url='/login/')
 def add_balance(request):
     print("Hello?")
     if request.method == 'POST':
@@ -188,12 +231,20 @@ def add_balance(request):
             request.user.profile.save()
             messages.success(request, f'Added {amount} to your balance.')
             print("This worked")
-        return redirect('buyer_page')
+        response = render(redirect('buyer_page'))
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response['Expires'] = '0'
+        return response
+        # return redirect('buyer_page')
     else:
         print("Nice work")
-        return render(request, 'buyer_page.html')
+        response = render(request, 'buyer_page.html')
+        response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response['Expires'] = '0'
+        return response
+        # return render(request, 'buyer_page.html')
     
-@login_required
+@login_required(login_url='/login/')
 def buyer_page(request):
     if request.method == 'POST':
         print("request")
