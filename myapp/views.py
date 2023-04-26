@@ -103,7 +103,7 @@ def add_listing(request):
         form = ListingForm(request.POST, request.FILES)
         if form.is_valid():
             listing = form.save(request.user)
-            response = render(redirect('display_user_listings'))
+            response = redirect('display_user_listings')
             response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
             response['Expires'] = '0'
             return response
@@ -210,7 +210,7 @@ def checkout(request):
 
     # display success message and redirect to main page
     messages.success(request, 'Checkout successful!')
-    response = render(redirect(reverse('main_get_all_product_names')))
+    response = redirect(reverse('main_get_all_product_names'))
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response['Expires'] = '0'
     return response
