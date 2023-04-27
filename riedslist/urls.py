@@ -42,7 +42,8 @@ urlpatterns = [
     path('search/', user_view.search_listings, name='search_listings'),
     path('checkout/', user_view.checkout, name='checkout'),
     path('add_balance/', user_view.add_balance, name='add_balance'),
-    path('buyer_page/', user_view.buyer_page, name='buyer_page')
+    path('buyer_page/', user_view.buyer_page, name='buyer_page'),
+    path('checkoutportal/', TemplateView.as_view(template_name='main_pages/checkout.html'), name='checkout_portal'),
 ]
 
 if settings.DEBUG:
