@@ -91,9 +91,19 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
+        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
+        'TEST': {
+            'USER': 'user',
+            'PASSWORD': 'pass',
+            'NAME': 'test_database',
+            'USER': 'test_user',
+            'PASSWORD': 'test_pass',
+            'NAME': 'test_db',
+                }
 
     }
+    
+    
 }
 
 
