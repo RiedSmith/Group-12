@@ -36,6 +36,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
+    - name: Shutdown Ubuntu MySQL (SUDO)
+      run: sudo service mysql stop 
+        
     - name: Start MySQL service
       run: |
        sudo service mysql start
