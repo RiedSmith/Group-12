@@ -7,55 +7,47 @@ on:
     branches: [ test ]
 
 jobs:
-  build:
-
-
+  test:
     runs-on: ubuntu-latest
+
     services:
       mysql:
-        image: mysql:8
+        image: mysql:8.0.32
         env:
           MYSQL_DATABASE: test_database
           MYSQL_ROOT_PASSWORD: testrootpass
           MYSQL_USER: test_user
           MYSQL_PASSWORD: test_pass
-        ports: 
-          - 3306:3306
+        ports: ['3306:3306']
         
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-        
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install Dependencies
+        python-version: 3.9
+
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
-    - name: Shutdown Ubuntu MySQL (SUDO)
-      run: sudo service mysql stop
-   
-    - name: Install mysql
-      run: sudo apt-get install mysql-server
-    
-    - name: Test mySQL
-      run: sudo systemctl status mysql.service
-      
-    - name: More test  
-      run: sudo journalctl -xeu mysql.service
-    
+        
     - name: Start MySQL service
       run: |
        sudo service mysql start
+       sleep 5
     
+
     - name: Grant privileges to test user
       run: |
         mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'test_user'@'%' IDENTIFIED BY 'test_pass';"
         mysql -u root -e "FLUSH PRIVILEGES;"
-      
-    - name: Run Tests
+        
+    - name: Run tests
+      env:
+        DATABASE_URL: mysql://${{ env.MYSQL_USER }}:${{ env.MYSQL_PASSWORD }}@localhost/${{ env.MYSQL_DATABASE }}
       run: |
         python manage.py test
