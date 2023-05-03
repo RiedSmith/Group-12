@@ -41,7 +41,7 @@ jobs:
         
     - name: Start MySQL service
       run: |
-       sudo service mysql start
+       sudo systemctl start mysql
        sleep 5
     
 
