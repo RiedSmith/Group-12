@@ -102,12 +102,15 @@ def add_listing(request):
     if request.method == 'POST':
         form = ListingForm(request.POST, request.FILES)
         if form.is_valid():
-            listing = form.save(request.user)
-            response = redirect('display_user_listings')
-            response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
-            response['Expires'] = '0'
-            return response
-            # return redirect('display_user_listings')
+            if request.user.profile.approved:
+                listing = form.save(request.user)
+                response = redirect('display_user_listings')
+                response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+                response['Expires'] = '0'
+                return response
+            else:
+                print("Not authorized")
+                messages.warning(request, 'Your account has not been approved yet.')
         else:
             print(form.errors)
     else:
@@ -116,6 +119,7 @@ def add_listing(request):
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response['Expires'] = '0'
     return response
+
     # return render(request, 'main_pages/addlisting.html', {'form': form})
 
 
@@ -209,7 +213,7 @@ def checkout(request):
     profile.cart.clear()
 
     # display success message and redirect to main page
-    messages.success(request, 'Checkout successful!')
+    messages.success(request, f'Checkout successful!')
     response = redirect(reverse('main_get_all_product_names'))
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response['Expires'] = '0'

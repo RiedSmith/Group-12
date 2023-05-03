@@ -6,7 +6,7 @@
 {% block content %}
   <div class="row">
     <div class="col-md-6">
-      <img src="{{ listing.image.url }}" alt="{{ listing.productName }} image">
+      <img src="{{ listing.image.url }}" alt="{{ listing.productName }} image" class="img-fluid border">
     </div>
     <div class="col-md-6">
       <h2>{{ listing.productName }}</h2>
@@ -20,3 +20,10 @@
     </div>
   </div>
 {% endblock %}
+
+<style>
+  .border {
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+</style>

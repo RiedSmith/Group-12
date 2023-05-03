@@ -34,6 +34,7 @@ class Profile(models.Model):
     account_type = models.CharField(max_length=10, choices=account_type_choices, default="B")
     location = models.CharField(max_length=30, blank="", default="place")
     cart = models.ManyToManyField(Listing)
+    approved = models.BooleanField(default = False)
     
     def __str__(self):
         return self.user.username
