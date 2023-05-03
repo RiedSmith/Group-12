@@ -42,6 +42,11 @@ jobs:
         
    # - name: Run Migrations
    #   run: python manage.py migrate
+    
+    - name: ???
+      run: |
+        sudo apt-get update
+        sudo apt-get upgrade
         
     - name: Start MySQL service
       run: |
