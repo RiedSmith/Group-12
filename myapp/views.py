@@ -177,7 +177,7 @@ def search_listings(request):
             response['Expires'] = '0'
             return response
             # return render(request, 'main_pages/mainpage.html', {'listings': listings})
-    response = render(redirect(reverse('main_get_all_product_names')))
+    response = redirect(reverse('main_get_all_product_names'))
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response['Expires'] = '0'
     return response
@@ -213,8 +213,8 @@ def checkout(request):
     profile.cart.clear()
 
     # display success message and redirect to main page
-    messages.success(request, f'Checkout successful!')
-    response = redirect(reverse('main_get_all_product_names'))
+    messages.success(request, 'Checkout successful!')
+    response = render(request, 'main_pages/checkout.html')
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response['Expires'] = '0'
     return response

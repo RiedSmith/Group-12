@@ -30,12 +30,14 @@ class ProfileForm(UserCreationForm):
 class ListingForm(forms.ModelForm):
     class Meta:
         model = Listing
-        fields = ['productName', 'desc', 'price', 'image']
+        fields = ['productName', 'desc', 'price', 'image', 'quantity']
         widgets = {
             'image': ClearableFileInput(attrs={'multiple': False}),
             'productName': forms.TextInput(attrs={'class': 'form-control'}),
             'desc': forms.TextInput(attrs={'class': 'form-control'}),
+            'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            
         }
 
     def save(self, user, commit=True):
