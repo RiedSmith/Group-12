@@ -37,7 +37,7 @@ jobs:
         
     - name: Start MySQL service
       run: |
-       sudo service mysql start
+       sudo apt-get install mysql-server
        sleep 5
     
 
