@@ -97,9 +97,7 @@ DATABASES = {
             'PASSWORD': 'pass',
             'NAME': 'test_database',
             'USER': 'test_user',
-            'PASSWORD': 'test_pass',
-            'NAME': 'test_db',
-                }
+            'PASSWORD': 'test_pass'}
 
     }
     
