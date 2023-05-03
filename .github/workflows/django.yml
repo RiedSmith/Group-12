@@ -9,11 +9,11 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     services:
       mysql:
-        image: mysql:8.0.32
+        image: mysql:5.7
         env:
           MYSQL_DATABASE: test_database
           MYSQL_ROOT_PASSWORD: testrootpass
