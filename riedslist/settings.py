@@ -86,20 +86,16 @@ WSGI_APPLICATION = 'riedslist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'default',
-        'USER': 'test_user',
-        'PASSWORD': 'test_pass',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': '127.0.0.1',
         'PORT': '3306',
-        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
-        'TEST': {
-            'USER': 'test_user',
-            'PASSWORD': 'test_pass',
-            'NAME': 'test_db',
-                }
+        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
 
     }
 }
+
 
 
 # Password validation
