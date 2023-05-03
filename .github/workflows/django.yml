@@ -41,8 +41,8 @@ jobs:
    #     mysql -u root -e "GRANT ALL PRIVILEGES ON *.* TO 'test_user'@'%' IDENTIFIED BY 'test_pass';"
    #     mysql -u root -e "FLUSH PRIVILEGES;"
         
-    - name: Run Migrations
-      run: python manage.py migrate
+   # - name: Run Migrations
+   #   run: python manage.py migrate
         
    # - name: Start MySQL service
    #   run: |
