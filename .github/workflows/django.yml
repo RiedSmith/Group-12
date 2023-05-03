@@ -41,6 +41,12 @@ jobs:
     - name: Install mysql
       run: sudo apt-get install mysql-server
     
+    - name: Test mySQL
+      run: sudo systemctl status mysql.service
+      
+    - name: More test  
+      run: sudo journalctl -xeu mysql.service
+    
     - name: Start MySQL service
       run: |
        sudo service mysql start
