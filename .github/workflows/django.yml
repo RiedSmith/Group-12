@@ -42,7 +42,6 @@ jobs:
     - name: Start MySQL service
       run: |
        sudo systemctl start mysql
-       sleep 5
     
 
     - name: Grant privileges to test user
