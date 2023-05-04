@@ -200,10 +200,15 @@ def checkout(request):
     profile.save()
 
     for item in cart_items:
-        # remove the item listing from the seller's account
         listing = item
-        # delete the listing object
-        listing.delete()
+        if listing.quantity < item.quantity:
+            messages.error(request, f'Insufficient stock for {listing.title}.')
+            return redirect(reverse('buyer_page'))
+        listing.quantity -= 1
+        listing.save()
+        if listing.quantity == 0:
+            listing.delete()
+        listing.save()
 
     # clear the user's cart
     profile.cart.clear()
@@ -231,7 +236,7 @@ def add_balance(request):
             request.user.profile.save()
             messages.success(request, f'Added {amount} to your balance.')
             print("This worked")
-        response = render(redirect('buyer_page'))
+        response = redirect('buyer_page')
         response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
         response['Expires'] = '0'
         return response
