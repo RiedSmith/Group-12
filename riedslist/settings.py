@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'riedslist.wsgi.application'
 
 if os.getenv('GITHUB_WORKFLOW'):
     DATABASES = {
-        'workflow':{
+        'default':{
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'github-actions',
             'USER': 'sql',
