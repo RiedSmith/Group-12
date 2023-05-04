@@ -41,7 +41,7 @@ jobs:
         DBUSER: root
         DBPASSWORD: zergling
         DBHOST: 127.0.0.1
-        DBPORT: $
+        DBPORT: 3306
     - name: Run Tests
       run: |
         python manage.py test
@@ -51,4 +51,4 @@ jobs:
         DBUSER: root
         DBPASSWORD: zergling
         DBHOST: 127.0.0.1
-        DBPORT: $
+        DBPORT: 3306
