@@ -24,6 +24,14 @@
         <option value="paypal">PayPal</option>
       </select>
     </div>
+    <div class="form-group">
+      <label for="card_number">Card Number:</label>
+      <input type="text" class="form-control" id="card_number" name="card_number" required maxlength="16" minlength="16">
+    </div>
+    <div class="form-group">
+      <label for="cvv">CVV:</label>
+      <input type="text" class="form-control" id="cvv" name="cvv" required maxlength="3" minlength="3">
+    </div>
     <a href="/" class="btn btn-primary">Submit</a>
   </form>
 {% endblock %}

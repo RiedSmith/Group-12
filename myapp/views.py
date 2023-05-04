@@ -183,35 +183,6 @@ def search_listings(request):
     return response
     # return redirect(reverse('main_get_all_product_names'))
 
-@login_required(login_url='/login/')
-def checkout(request):
-    user = request.user
-    if not user.is_authenticated:
-        return redirect(reverse('login_view'))
-
-    # get user's profile and cart items
-    profile = user.profile
-    cart_items = profile.cart.all()
-
-    # calculate total price of cart items
-    total_price = sum([item.price for item in cart_items])
-
-    # subtract total price from buyer's balance
-    if profile.balance < total_price:
-        messages.error(request, 'Insufficient balance for checkout.')
-        return redirect(reverse('buyer_page'))
-    profile.balance -= total_price
-    profile.save()
-
-    for item in cart_items:
-        # remove the item listing from the seller's account
-        listing = item
-        # delete the listing object
-        listing.delete()
-
-    # clear the user's cart
-    profile.cart.clear()
-
     # display success message and redirect to main page
     messages.success(request, 'Checkout successful!')
     response = render(request, 'main_pages/checkout.html')
@@ -271,3 +242,39 @@ def buyer_page(request):
     else:
         form = BuyerProfileForm(instance=request.user.profile)
     return render(request, 'main_pages/buyer_page.html', {'form': form})
+
+@login_required(login_url='/login/')
+def checkout(request):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect(reverse('login_view'))
+
+    profile = user.profile
+    cart_items = profile.cart.all()
+
+    total_price = sum([item.price for item in cart_items])
+
+    if profile.balance < total_price:
+        messages.error(request, 'Insufficient balance for checkout.')
+        return redirect(reverse('buyer_page'))
+    profile.balance -= total_price
+    profile.save()
+
+    for item in cart_items:
+        listing = item
+        if listing.quantity < item.quantity:
+            messages.error(request, f'Insufficient stock for {listing.title}.')
+            return redirect(reverse('buyer_page'))
+        listing.quantity -= 1
+        listing.save()
+        if listing.quantity == 0:
+            listing.delete()
+        listing.save()
+
+    profile.cart.clear()
+
+    messages.success(request, 'Checkout successful!')
+    response = render(request, 'main_pages/checkout.html')
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Expires'] = '0'
+    return response
