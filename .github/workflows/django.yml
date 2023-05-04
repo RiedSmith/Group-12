@@ -15,10 +15,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          MYSQL_DATABASE: test_database
-          MYSQL_ROOT_PASSWORD: testrootpass
-          MYSQL_USER: test_user
-          MYSQL_PASSWORD: test_pass
+          MYSQL_DATABASE: github-actions
+          MYSQL_ROOT_PASSWORD: sql
+          MYSQL_USER: sql
+          MYSQL_PASSWORD: sql
         ports: ['3306:3306']
         
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
