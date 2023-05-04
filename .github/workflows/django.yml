@@ -35,6 +35,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        
+    - name: Create test database
+      run: |
+        mysql -h localhost -u sql -p'sql' -e 'CREATE DATABASE test_github-actions;'
+        mysql -h localhost -u sql -p'sql' -e 'GRANT ALL PRIVILEGES ON test_github-actions.* TO sql@localhost;'
+      env:
+        MYSQL_ROOT_PASSWORD: sql
 
         
    # - name: Run Migrations
