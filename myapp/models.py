@@ -17,8 +17,6 @@ class Listing(models.Model):
     image = models.ImageField(upload_to='images/', null = True)
     quantity = models.IntegerField(default=1)
 
-    def __str__(self):
-        return self.productName
     
     def get_absolute_url(self):
         return reverse('listing_details', kwargs={'listing_id': self.id})
@@ -36,20 +34,6 @@ class Profile(models.Model):
     location = models.CharField(max_length=30, blank="", default="place")
     cart = models.ManyToManyField(Listing)
     approved = models.BooleanField(default = False)
-    
-    def __str__(self):
-        return self.user.username
-
-
-    
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
 
 
 class Watchlist(models.Model):
